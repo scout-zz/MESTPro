@@ -43,6 +43,7 @@ always @(posedge CLK or negedge RESET) // sensitivity list
 begin  
     if (!RESET) begin 
 		ACC= 8'd0 ; //initialize ACC to zero
+		A= 8'd0; //initialize A to zero
 		OUT_DATA= 8'd0 ; //initialize temp ACC to zero
 	end
     else begin
