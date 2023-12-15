@@ -42,10 +42,10 @@ reg [7:0] ACC;  //ACC Register
 always @(posedge CLK or negedge RESET) // sensitivity list 
 begin  
     if (!RESET) begin 
-		ACC= 8'd0 ; //initialize ACC to zero
-		A= 8'd0; //initialize A to zero
-		OUT_DATA= 8'd0 ; //initialize temp ACC to zero
-	end
+        ACC= 8'd0 ; //initialize ACC to zero
+        A= 8'd0; //initialize A to zero
+        OUT_DATA= 8'd0 ; //initialize temp ACC to zero
+    end
     else begin
         if ( INSTRUCTION == 1 ) begin
             A = IN_DATA ;        
@@ -71,6 +71,8 @@ begin
         else begin
             $display("Error in Instruction");
         end
-	end	
+    end 
 end
 endmodule
+
+
