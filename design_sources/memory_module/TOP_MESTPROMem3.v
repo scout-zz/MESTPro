@@ -28,7 +28,8 @@ input wire CLK,
 input wire WE,
 input wire CS,
 input wire RESET,
-output reg [`DATA_BITS-1:0] o_dat
+output reg [`DATA_BITS-1:0] o_dat,
+output reg ERROR
 );
 
 
@@ -39,11 +40,12 @@ initial
 begin
 
 o_dat = 8'dz;
+ERROR = 1'b0;
  for (i=0;i<`MEM_SIZE; i=i+1) begin
 		 mem[i] = 8'd0;
                 end
 
-$readmemh("/home/hastings/MestProMem3/MestProMem3.srcs/sources_1/new/prog.txt", mem, 0 , `ROM_SIZE-1); 
+$readmemb("/home/hastings/git/MESTPro/design_sources/memory_module/prog.txt", mem, 0 , `ROM_SIZE-1); 
 
 end 
 
@@ -51,6 +53,7 @@ always @(posedge CLK or negedge RESET)
 begin
 if (RESET) begin
         o_dat = 8'dz;
+        ERROR = 1'b0;
         for (i=`ROM_SIZE;i<`MEM_SIZE; i=i+1) begin 
 		          mem[i] = 8'd0;
                 end	
@@ -58,9 +61,14 @@ if (RESET) begin
     else begin
     
 if (CS & WE & (addr>`ROM_SIZE-1)) begin
+       ERROR = 1'b0;
        mem[addr]= in_dat;           
        end
+       else if (CS & WE & addr<`ROM_SIZE) begin
+        ERROR = 1'b1;
+        end
         else if (CS & !WE) begin
+        ERROR = 1'b0;
          o_dat = mem[addr];
         end
      end

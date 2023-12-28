@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-/`ifndef _param_vh_
+`ifndef _param_vh_
 `define _param_vh_
 
 `define ADDR_BITS 16

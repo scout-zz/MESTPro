@@ -1,7 +1,7 @@
 module mest_pro#(
     parameter OP_CODE_SIZE     = 4,
     parameter INSTRUCTION_SIZE = OP_CODE_SIZE + 8 + 8 + 8,
-    parameter ROM_DEPTH = 256
+    parameter ROM_DEPTH = 65536
 )(
     input clk,
     input i_reset_n,
@@ -9,7 +9,13 @@ module mest_pro#(
     // Memory Interface
     output o_req,
     output [$clog2(ROM_DEPTH)-1  :0] o_prog_counter,
+    output reg [INSTRUCTION_SIZE-1   :0] data2store,
+    output reg WE,
+    output reg CS,
+    output reg RESET,
     input [INSTRUCTION_SIZE-1    :0] i_instruction,
+    input m_ERROR,
+    
     // Outputs
     output [8-1 :0] o_result,
     output o_valid_result,
@@ -35,6 +41,11 @@ wire jump;
 wire return_pc;
 
 assign o_valid_result = exec_done;
+
+assign WE = 1'b0;
+assign CS = 1'b1;
+assign RESET = 1'b0;
+
 
 mest_pro_ctrlr
 u_mest_pro_ctrlr(
