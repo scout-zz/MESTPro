@@ -32,7 +32,6 @@ output reg [`DATA_BITS-1:0] o_dat,
 output reg ERROR
 );
 
-
 reg [`DATA_BITS-1:0] mem[`MEM_SIZE-1:0];
 integer i;
 
@@ -45,7 +44,7 @@ ERROR = 1'b0;
 		 mem[i] = 8'd0;
                 end
 
-$readmemb("/home/hastings/git/MESTPro/design_sources/memory_module/prog.txt", mem, 0 , `ROM_SIZE-1); 
+$readmemb("prog.txt", mem, 0 , `ROM_SIZE-1); 
 
 end 
 

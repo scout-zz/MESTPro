@@ -1,3 +1,6 @@
+`include "opcodes.vh"
+`include "param.vh"
+
 module mest_pro_exec(
     input clk,
     input i_reset_n,
@@ -11,76 +14,84 @@ module mest_pro_exec(
     output reg o_zero_flag,
     output reg o_jump,
     output reg o_return_pc,
-    output reg o_end_of_code
+    output reg o_end_of_code,
+    output reg o_rega
 );
 
 
 reg [9-1 :0] inter_result;
+reg [ `DATA_BITS-1:0 ] REGA;
 
 always @(*)
 begin
     case(i_op_code)
-    4'd0: begin
+    `OP_ADD: begin
         inter_result = i_operand1 + i_operand2;
         o_jump        = 1'd0;
         o_end_of_code = 1'd0;
         o_return_pc   = 1'b0;
     end
-    4'd1: begin
+    `OP_SUB: begin
         inter_result = i_operand1 - i_operand2;
         o_jump        = 1'd0;
         o_end_of_code = 1'd0;
         o_return_pc   = 1'b0;
     end
-    4'd2: begin
+    `OP_MULTIPLY: begin
         inter_result = i_operand1 * i_operand2;
         o_jump        = 1'd0;
         o_end_of_code = 1'd0;
         o_return_pc   = 1'b0;
     end
-    4'd3: begin
+    `OP_AND: begin
         inter_result = i_operand1 & i_operand2;
         o_jump        = 1'd0;
         o_end_of_code = 1'd0;
         o_return_pc   = 1'b0;
     end
-    4'd4: begin
+    `OP_OR: begin
         inter_result = i_operand1 | i_operand2;
         o_jump        = 1'd0;
         o_end_of_code = 1'd0;
         o_return_pc   = 1'b0;
     end
-    4'd5: begin
+    `OP_SROP1 : begin
         inter_result = i_operand1 >> 1;
         o_jump        = 1'd0;
         o_end_of_code = 1'd0;
         o_return_pc   = 1'b0;
     end
-    4'd6: begin
+    `OP_SLOP1: begin
         inter_result = i_operand1 << 1;
         o_jump        = 1'd0;
         o_end_of_code = 1'd0;
         o_return_pc   = 1'b0;
     end
-    4'd7: begin
+    `OP_NEGOP1: begin
         inter_result = ~i_operand1;
         o_jump        = 1'd0;
         o_end_of_code = 1'd0;
         o_return_pc   = 1'b0;
     end
-    4'd8: begin
+    `OP_JMP: begin
         o_jump = 1'd1;
         inter_result  = 8'd0;
         o_end_of_code = 1'd0;
         o_return_pc   = 1'b0;
     end
-    4'd9: begin
+    `OP_RET: begin
         o_return_pc = 1'd1;
         inter_result  = 8'd0;
         o_jump        = 1'd0;
         o_end_of_code = 1'd0;
+    end  
+    `OP_MVIA: begin
+        REGA = i_operand1; 
+        o_jump        = 1'd0;
+        o_end_of_code = 1'd0;
+        o_return_pc   = 1'b0;       
     end
-    4'd15: begin
+    `OP_HALT: begin
         o_end_of_code = 1'd1;
         inter_result  = 8'd0;
         o_jump        = 1'd0;

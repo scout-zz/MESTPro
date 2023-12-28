@@ -1,3 +1,5 @@
+`include "param.vh"
+
 module mest_pro#(
     parameter OP_CODE_SIZE     = 4,
     parameter INSTRUCTION_SIZE = OP_CODE_SIZE + 8 + 8 + 8,
@@ -45,7 +47,6 @@ assign o_valid_result = exec_done;
 assign WE = 1'b0;
 assign CS = 1'b1;
 assign RESET = 1'b0;
-
 
 mest_pro_ctrlr
 u_mest_pro_ctrlr(

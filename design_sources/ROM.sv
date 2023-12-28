@@ -9,7 +9,7 @@ module ROM#(
 reg [WORD_SIZE-1 :0] rom [DEPTH-1 :0];
 
 initial begin
-    $readmemb("/home/abouzeid.10/Desktop/course/Project/prog.txt", rom);
+    $readmemb("prog.txt", rom);
 end
 
 always @(posedge clk)

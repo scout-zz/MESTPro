@@ -9,7 +9,7 @@ module mest_pro_rom#(
 reg [WORD_SIZE-1 :0] rom [DEPTH-1 :0];
 
 initial begin
-    $readmemb("/home/hastings/MESTProModel2/MESTProModel2.srcs/sources_1/new/prog.txt", rom); //Change Path
+    $readmemb("prog.txt", rom); //Change Path
 end
 
 always @(posedge clk)
